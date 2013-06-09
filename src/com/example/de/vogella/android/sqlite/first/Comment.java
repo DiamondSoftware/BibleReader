@@ -1,6 +1,8 @@
 package com.example.de.vogella.android.sqlite.first;
 
 public class Comment {
+	
+	
   private long id;
   private String comment;
 
