@@ -24,7 +24,7 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="230dp"
+        android:layout_width="228dp"
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_gravity="right|fill_vertical"
@@ -35,7 +35,7 @@
         android:fitsSystemWindows="true"
         android:focusableInTouchMode="true"
         android:scaleType="matrix"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
         android:scrollbars="horizontal"
         android:src="@drawable/joshua" />
 
