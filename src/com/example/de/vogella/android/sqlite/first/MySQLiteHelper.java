@@ -41,17 +41,18 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
    */
  private boolean checkDataBase(){
   
- SQLiteDatabase checkDB = null;
+	 SQLiteDatabase checkDB = null;
   
- try{
- String myPath = DATABASE_PATH + DATABASE_NAME;
- checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-  
- }catch(SQLiteException e){
-  
- //database does't exist yet.
-  
- }
+	 try
+	 {
+		 String myPath = DATABASE_PATH + DATABASE_NAME;
+		 checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+	  
+	 }
+	 catch(SQLiteException e)
+	 {
+		 //database does't exist yet.
+	 }
   
  if(checkDB != null)
  {

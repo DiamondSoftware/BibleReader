@@ -1,34 +1,33 @@
 package com.example.de.vogella.android.sqlite.first;
 
 import java.util.List;
-import java.util.Random;
-
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-
-
 
 public class TestDatabaseActivity extends ListActivity {
   private CommentsDataSource datasource;
-
+  TanakhImageView image;
+     
   @Override
-  public void onCreate(Bundle savedInstanceState) {
+  public void onCreate(Bundle savedInstanceState) 
+  {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_test_database);
-
     datasource = new CommentsDataSource(this);
     datasource.open();
-
     List<Comment> values = datasource.getAllComments();
 
     // Use the SimpleCursorAdapter to show the
     // elements in a ListView
     ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this,
-        android.R.layout.simple_list_item_1, values);
+    android.R.layout.simple_list_item_1, values);
     setListAdapter(adapter);
+  
+    // Velum view
+    //TanakhImageView myView = new TanakhImageView(getApplicationContext());
+    //myView.setImageResource(R.drawable.joshua);
   }
 
   // Will be called via the onClick attribute
@@ -37,7 +36,8 @@ public class TestDatabaseActivity extends ListActivity {
 	 @SuppressWarnings("unchecked")
     ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
  
-    switch (view.getId()) {   
+    switch (view.getId()) 
+    {   
     
     /*case R.id.add:
       String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
@@ -54,20 +54,20 @@ public class TestDatabaseActivity extends ListActivity {
         datasource.deleteComment(comment);
         adapter.remove(comment);
       }
-      break;*/
+      break;
     
-    //case R.id.list:
-	  //  {
-	    //   	setSelection (2); 
-	    //}   
-    //break;
+    case R.id.list:
+	    {
+	       	setSelection (2); 
+	    }   
+    break;
     
     case R.id.imageView1:
     	{
     		setSelection (2); 
     	}     
     break;   
-    
+    */
     }
     adapter.notifyDataSetChanged();
   }
