@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+
+
 public class TestDatabaseActivity extends ListActivity {
   private CommentsDataSource datasource;
 
