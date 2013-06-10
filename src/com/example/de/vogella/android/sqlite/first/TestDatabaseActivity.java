@@ -34,23 +34,19 @@ public class TestDatabaseActivity extends ListActivity {
   // Will be called via the onClick attribute
   // of the buttons in main.xml
   public void onClick(View view) {
-	  ImageView image;
-	  
-    @SuppressWarnings("unchecked")
+	 @SuppressWarnings("unchecked")
     ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
-    Comment comment = null;
+ 
     switch (view.getId()) {   
-    case R.id.add:
+    
+    /*case R.id.add:
       String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
       int nextInt = new Random().nextInt(3);
       // Save the new comment to the database
       comment = datasource.createComment(comments[nextInt]);
       adapter.add(comment);
-		
       image = (ImageView) findViewById(R.id.imageView1);
       image.setImageResource(R.drawable.joshua);
-      
-      
       break;
     case R.id.delete:
       if (getListAdapter().getCount() > 0) {
@@ -58,13 +54,20 @@ public class TestDatabaseActivity extends ListActivity {
         datasource.deleteComment(comment);
         adapter.remove(comment);
       }
-      break;
+      break;*/
+    
+    //case R.id.list:
+	  //  {
+	    //   	setSelection (2); 
+	    //}   
+    //break;
+    
     case R.id.imageView1:
-       
-    	setSelection (2); 
-        break;   
-      
-      
+    	{
+    		setSelection (2); 
+    	}     
+    break;   
+    
     }
     adapter.notifyDataSetChanged();
   }
