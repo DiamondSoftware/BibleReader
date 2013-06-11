@@ -41,7 +41,12 @@ public class TanakhImageView extends ImageView	{
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
-	    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+	    // Warning - we need to distill this from any action that is not actually a touch 
+		// select; if user wanted to move the velum or resize....
+		// I think we need to grab the ACTION_UP as well and work out 
+		// if position has changed or not..
+		
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 	        Log.d("X & Y", "touch event - down");
 
 	        int eventX = (int) event.getX();
