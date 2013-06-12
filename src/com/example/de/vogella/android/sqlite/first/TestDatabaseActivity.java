@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter;
 public class TestDatabaseActivity extends ListActivity {
   private CommentsDataSource datasource;
   TanakhImageView image;
-     
+  ArrayAdapter<Comment> adapter;
+  
   @Override
   public void onCreate(Bundle savedInstanceState) 
   {
@@ -21,22 +22,16 @@ public class TestDatabaseActivity extends ListActivity {
 
     // Use the SimpleCursorAdapter to show the
     // elements in a ListView
-    ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this,
-    android.R.layout.simple_list_item_1, values);
+    adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_list_item_1, values);
     setListAdapter(adapter);
   
-    // Velum view
-    //TanakhImageView myView = new TanakhImageView(getApplicationContext());
-    //myView.setImageResource(R.drawable.joshua);
   }
 
-  // Will be called via the onClick attribute
-  // of the buttons in main.xml
-  public void onClick(View view) {
-	 @SuppressWarnings("unchecked")
+  public void onClick(View view) 
+  {
+	@SuppressWarnings("unchecked")
     ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
- 
-    switch (view.getId()) 
+     switch (view.getId()) 
     {   
     
     /*case R.id.add:
