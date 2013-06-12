@@ -1,5 +1,6 @@
 package com.example.de.vogella.android.sqlite.first;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -25,7 +26,7 @@ public class TanakhImageView extends ImageView	{
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         //mIcon = context.getResources().getDrawable(R.drawable.joshua);
 		mIcon = getDrawable();
-		mIcon.setBounds(0, 0, mIcon.getIntrinsicWidth()/3, mIcon.getIntrinsicHeight()/3);
+		mIcon.setBounds(0, 0, mIcon.getIntrinsicWidth(), mIcon.getIntrinsicHeight());
 		setOnClickListener(velumListener);		
 		localContext = context;
 	}
@@ -113,33 +114,23 @@ public class TanakhImageView extends ImageView	{
 	// Needs context - book & chapter
 	private void findCoordinatesVerse(int x, int y)
 	{
-		if (x < 100)
-		{
-			if (y > 200)
-			{
-				LayoutInflater inflater = (LayoutInflater) localContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-				GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
-				final ListView verseList = (ListView) grid.findViewById(android.R.id.list);			
-				//verseList.setSelection(20);	
-				//verseList.requestFocus();
-				//verseList.clearFocus();
-				verseList.post(new Runnable() {
-	                    @Override
-	                    public void run() {
-	                    	//verseList.setSelection(20);
-	                    	
-	                    	verseList.setSelected(true);
-	                    	verseList.setTop(20);
-	                    	verseList.clearFocus();
-	                    }
-	                });			
-				Log.d("FindCoordinatesVerse", "should have set to verse 20 in list");
+		LayoutInflater inflater = (LayoutInflater) localContext.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		
+		GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
+		final ListView verseList = (ListView) grid.findViewById(android.R.id.list);		
+		
+		ListActivity myListActivity  = (ListActivity) verseList.getContext();
+		myListActivity.setSelection(12);
 
-		        //RelativeLayout layout=(RelativeLayout)view.findViewById(R.id.relLayout);
-		        //Button button=(Button)layout.findViewById(R.id.button);
-		        //((ViewPager) collection).addView(view, 0);
-		        //return view;
-			}
+		if (x  > 100)
+		{
+			myListActivity.setSelection(300);
+
+			
+		}
+		else
+		{
+			myListActivity.setSelection(1);
 			
 		}
 	}

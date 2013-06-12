@@ -7,11 +7,16 @@
     android:orientation="vertical" >
 
 <com.example.de.vogella.android.sqlite.first.TanakhImageView
-	    android:adjustViewBounds="true"
-        android:layout_width="wrap_content"
-        android:layout_gravity="left|top"
-        android:layout_height="400dp"  
-        android:src="@drawable/joshua"/>
+    android:layout_height="332dp"
+    android:layout_gravity="left|top"
+    android:baselineAlignBottom="false"
+    android:cropToPadding="false"
+    android:fitsSystemWindows="false"
+    android:maxHeight="400dp"
+    android:maxWidth="400dp"
+    android:scaleType="centerInside"
+    android:scrollbarAlwaysDrawVerticalTrack="false"
+    android:src="@drawable/joshua" />
 
     <ListView
         android:id="@android:id/list"
@@ -19,9 +24,10 @@
         android:layout_height="130dp"
         android:layout_column="0"
         android:layout_gravity="left|bottom"
-        android:layout_row="3"
+        android:headerDividersEnabled="true"
         android:text="@string/hello"
         tools:listitem="@android:layout/activity_list_item" >
+
     </ListView>
 
 </GridLayout>
