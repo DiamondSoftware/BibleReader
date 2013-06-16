@@ -1,30 +1,16 @@
+
 package com.example.de.vogella.android.sqlite.first;
 
-/*
-* TanakhImageViewer.java
-* By: Michael Ortiz
-* Updated By: Patrick Lackemacher
-* Updated By: Babay88
-* -------------------
-* Extends Android ImageView to include pinch zooming and panning.
-*/
-
-import android.app.ListActivity;
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 public class TanakhImageViewer extends ImageView {
 
@@ -83,7 +69,7 @@ public class TanakhImageViewer extends ImageView {
 
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                     last.set(curr);
+                    	last.set(curr);
                         start.set(last);
                         mode = DRAG;
                         break;
@@ -112,13 +98,7 @@ public class TanakhImageViewer extends ImageView {
                         mode = NONE;
                         break;
                 }
-
                 
-                
-    	        int eventX = (int) event.getX();
-    	        int eventY = (int) event.getY();
-    		    findCoordinatesVerse(eventX, eventY);
-
                 setImageMatrix(matrix);
                 invalidate();
                 return true; // indicate event was handled
@@ -127,66 +107,6 @@ public class TanakhImageViewer extends ImageView {
         });
     }
 
-    
-    
-	// Finds verse associated with coordinates
-	// Needs context - book & chapter
-	private void findCoordinatesVerse(int x, int y)
-	{
-		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
-		
-		GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
-		final ListView verseList = (ListView) grid.findViewById(android.R.id.list);		
-		
-		ListActivity myListActivity  = (ListActivity) verseList.getContext();
-
-	    Log.d("scale factor", " = "  + saveScale);
-
-		
-		
-		// Column #1
-		if (x  >= ((810 * 2)*saveScale) && x <= ((1100*2)*saveScale))
-		{
-			
-			//Verse 1:
-				if (y >= ((150 * 2) *saveScale) && y <= ((270 * 2)* saveScale))
-					{
-						myListActivity.setSelection(0);
-						//draw a rectangle
-						//Paint myPaint = new Paint();
-						//myPaint.setColor(Color.rgb(0, 0, 0));
-						//myPaint.setStrokeWidth(10);
-						//localCanvas.drawRect(((810 * 2)*saveScale), ((150 * 2) *saveScale), ((1100 * 2)*saveScale), ((270 * 2)* saveScale), myPaint);
-					
-					}
-				else
-				if (y >= ((270* 2) * saveScale) && y <= ((440 * 2)*saveScale))
-				myListActivity.setSelection(1);
-				else
-				if (y >= ((440* 2)*saveScale) && y <= ((530 * 2)*saveScale))
-				myListActivity.setSelection(2);
-				else
-				if (y >= ((530* 2)*saveScale) && y <= ((680 * 2)*saveScale))
-				myListActivity.setSelection(3);
-				else
-				if (y >= ((680* 2)*saveScale) && y <= ((820 * 2)*saveScale))
-				myListActivity.setSelection(4);
-				else
-				if (y >= ((820* 2)*saveScale) && y <= ((930 * 2)*saveScale))
-				myListActivity.setSelection(5);
-				else
-				if (y >= ((930* 2)*saveScale) && y <= ((1140 * 2)*saveScale))
-				myListActivity.setSelection(6);
-				else
-				if (y >= ((1140* 2)*saveScale) && y <= ((1320 * 2)*saveScale))
-				myListActivity.setSelection(7);
-
-		}
-		else myListActivity.setSelection(0);			
-
-	}
-
-    
     public void setMaxZoom(float x) {
         maxScale = x;
     }
@@ -200,21 +120,21 @@ public class TanakhImageViewer extends ImageView {
 
         @Override
         public boolean onScale(ScaleGestureDetector detector) {
-            float saveScale = detector.getScaleFactor();
+            float mScaleFactor = detector.getScaleFactor();
             float origScale = saveScale;
-            saveScale *= saveScale;
+            saveScale *= mScaleFactor;
             if (saveScale > maxScale) {
                 saveScale = maxScale;
-                saveScale = maxScale / origScale;
+                mScaleFactor = maxScale / origScale;
             } else if (saveScale < minScale) {
                 saveScale = minScale;
-                saveScale = minScale / origScale;
+                mScaleFactor = minScale / origScale;
             }
 
             if (origWidth * saveScale <= viewWidth || origHeight * saveScale <= viewHeight)
-                matrix.postScale(saveScale, saveScale, viewWidth / 2, viewHeight / 2);
+                matrix.postScale(mScaleFactor, mScaleFactor, viewWidth / 2, viewHeight / 2);
             else
-                matrix.postScale(saveScale, saveScale, detector.getFocusX(), detector.getFocusY());
+                matrix.postScale(mScaleFactor, mScaleFactor, detector.getFocusX(), detector.getFocusY());
 
             fixTrans();
             return true;
