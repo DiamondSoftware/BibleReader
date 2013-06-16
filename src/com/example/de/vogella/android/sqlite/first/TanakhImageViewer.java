@@ -1,16 +1,20 @@
 
 package com.example.de.vogella.android.sqlite.first;
 
+import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 public class TanakhImageViewer extends ImageView {
 
@@ -33,6 +37,8 @@ public class TanakhImageViewer extends ImageView {
     int viewWidth, viewHeight;
     static final int CLICK = 3;
     float saveScale = 1f;
+	private float mScaleFactor = 1.f;
+
     protected float origWidth, origHeight;
     int oldMeasuredWidth, oldMeasuredHeight;
 
@@ -50,6 +56,64 @@ public class TanakhImageViewer extends ImageView {
         super(context, attrs);
         sharedConstructing(context);
     }
+    
+	// Finds verse associated with coordinates
+	// Needs context - book & chapter
+	private void findCoordinatesVerse(int x, int y)
+	{
+		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+		
+		GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
+		final ListView verseList = (ListView) grid.findViewById(android.R.id.list);		
+		
+		ListActivity myListActivity  = (ListActivity) verseList.getContext();
+
+	    Log.d("scale factor", " = "  + mScaleFactor);
+	    Log.d("save scale", " = "  + saveScale);
+
+		
+		
+		// Column #1
+		if (x  >= ((810 * 2)*mScaleFactor) && x <= ((1100*2)*mScaleFactor))
+		{
+			
+			//Verse 1:
+				if (y >= ((150 * 2) *mScaleFactor) && y <= ((270 * 2)* mScaleFactor))
+					{
+						myListActivity.setSelection(0);
+						//draw a rectangle
+						//Paint myPaint = new Paint();
+					//myPaint.setColor(Color.rgb(0, 0, 0));
+						//myPaint.setStrokeWidth(10);
+						//localCanvas.drawRect(((810 * 2)*mScaleFactor), ((150 * 2) *mScaleFactor), ((1100 * 2)*mScaleFactor), ((270 * 2)* mScaleFactor), myPaint);
+					
+					}
+				else
+				if (y >= ((270* 2) * mScaleFactor) && y <= ((440 * 2)*mScaleFactor))
+				myListActivity.setSelection(1);
+				else
+				if (y >= ((440* 2)*mScaleFactor) && y <= ((530 * 2)*mScaleFactor))
+				myListActivity.setSelection(2);
+				else
+				if (y >= ((530* 2)*mScaleFactor) && y <= ((680 * 2)*mScaleFactor))
+				myListActivity.setSelection(3);
+				else
+				if (y >= ((680* 2)*mScaleFactor) && y <= ((820 * 2)*mScaleFactor))
+				myListActivity.setSelection(4);
+				else
+				if (y >= ((820* 2)*mScaleFactor) && y <= ((930 * 2)*mScaleFactor))
+				myListActivity.setSelection(5);
+				else
+				if (y >= ((930* 2)*mScaleFactor) && y <= ((1140 * 2)*mScaleFactor))
+				myListActivity.setSelection(6);
+				else
+				if (y >= ((1140* 2)*mScaleFactor) && y <= ((1320 * 2)*mScaleFactor))
+				myListActivity.setSelection(7);
+
+		}
+		else myListActivity.setSelection(0);			
+
+	}
     
     private void sharedConstructing(Context context) {
         super.setClickable(true);
@@ -98,7 +162,8 @@ public class TanakhImageViewer extends ImageView {
                         mode = NONE;
                         break;
                 }
-                
+         
+      		    findCoordinatesVerse((int) event.getX(), (int) event.getY());               
                 setImageMatrix(matrix);
                 invalidate();
                 return true; // indicate event was handled
