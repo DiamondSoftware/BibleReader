@@ -27,6 +27,9 @@ public class TanakhImageView extends ImageView	{
         //mIcon = context.getResources().getDrawable(R.drawable.joshua);
 		mIcon = getDrawable();
 		mIcon.setBounds(0, 0, mIcon.getIntrinsicWidth(), mIcon.getIntrinsicHeight());
+        
+		Log.d("width, height",mIcon.getIntrinsicWidth() + " " +  mIcon.getIntrinsicHeight());
+        
 		setOnClickListener(velumListener);		
 		localContext = context;
 	}
@@ -37,8 +40,7 @@ public class TanakhImageView extends ImageView	{
 	public TanakhImageView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
-	
-	
+		
 	private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 	    @Override
 	    public boolean onScale(ScaleGestureDetector detector) {
@@ -75,7 +77,10 @@ public class TanakhImageView extends ImageView	{
 	    // get the coordinates. That makes it impossible to
 	    // do in onCreate, that would just give us (0, 0).
 	    getLocationOnScreen(coords);
-	    //Log.d("X & Y", "image location on screen: " +  coords[0] +  " " + coords[1]);
+	    Log.d("X & Y", "image location on screen: " +  coords[0] +  " " + coords[1]);
+	    
+	    
+	    
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -85,7 +90,9 @@ public class TanakhImageView extends ImageView	{
 		// if position has changed or not..
 		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-	        Log.d("X & Y", "touch event - down");
+		    Log.d("X & Y", "image location on screen: " +  coords[0] +  " " + coords[1]);
+
+			Log.d("X & Y", "touch event - down");
 
 	        int eventX = (int) event.getX();
 	        int eventY = (int) event.getY();
@@ -96,6 +103,8 @@ public class TanakhImageView extends ImageView	{
 		    Log.d("X & Y", "on field (x, y) = "  +  xOnField +  " " + yOnField);
 
 		    findCoordinatesVerse(xOnField, yOnField);
+		    findCoordinatesVerse(eventX, eventY);
+		    
 		}
 		mScaleDetector.onTouchEvent(event);				
 		return true;
@@ -120,20 +129,42 @@ public class TanakhImageView extends ImageView	{
 		final ListView verseList = (ListView) grid.findViewById(android.R.id.list);		
 		
 		ListActivity myListActivity  = (ListActivity) verseList.getContext();
-		myListActivity.setSelection(12);
 
-		if (x  > 100)
-		{
-			myListActivity.setSelection(300);
+	    Log.d("scale factor", " = "  + mScaleFactor);
 
-			
-		}
-		else
+		
+		
+		// Column #1
+		if (x  >= ((810 * 2)*mScaleFactor) && x <= ((1100*2)*mScaleFactor))
 		{
-			myListActivity.setSelection(1);
 			
+			//Verse 1:
+				if (y >= ((150 * 2) *mScaleFactor) && y <= ((270 * 2)* mScaleFactor))
+					myListActivity.setSelection(0);
+				else
+				if (y >= ((270* 2) * mScaleFactor) && y <= ((440 * 2)*mScaleFactor))
+				myListActivity.setSelection(1);
+				else
+				if (y >= ((440* 2)*mScaleFactor) && y <= ((530 * 2)*mScaleFactor))
+				myListActivity.setSelection(2);
+				else
+				if (y >= ((530* 2)*mScaleFactor) && y <= ((680 * 2)*mScaleFactor))
+				myListActivity.setSelection(3);
+				else
+				if (y >= ((680* 2)*mScaleFactor) && y <= ((820 * 2)*mScaleFactor))
+				myListActivity.setSelection(4);
+				else
+				if (y >= ((820* 2)*mScaleFactor) && y <= ((930 * 2)*mScaleFactor))
+				myListActivity.setSelection(5);
+				else
+				if (y >= ((930* 2)*mScaleFactor) && y <= ((1140 * 2)*mScaleFactor))
+				myListActivity.setSelection(6);
+				else
+				if (y >= ((1140* 2)*mScaleFactor) && y <= ((1320 * 2)*mScaleFactor))
+				myListActivity.setSelection(7);
+
 		}
+		else myListActivity.setSelection(0);			
+
 	}
-	
-	
 }
