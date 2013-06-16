@@ -3,6 +3,8 @@ package com.example.de.vogella.android.sqlite.first;
 import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,6 +22,8 @@ public class TanakhImageView extends ImageView	{
 	private float mScaleFactor = 1.f;
 	private Drawable mIcon;
 	private Context localContext;
+	private Canvas	localCanvas;
+	
 	
 	public TanakhImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -77,10 +81,7 @@ public class TanakhImageView extends ImageView	{
 	    // get the coordinates. That makes it impossible to
 	    // do in onCreate, that would just give us (0, 0).
 	    getLocationOnScreen(coords);
-	    Log.d("X & Y", "image location on screen: " +  coords[0] +  " " + coords[1]);
-	    
-	    
-	    
+	    Log.d("X & Y", "image location on screen: " +  coords[0] +  " " + coords[1]);	    
 	}
 
 	public boolean onTouchEvent(MotionEvent event) {
@@ -102,7 +103,7 @@ public class TanakhImageView extends ImageView	{
 	        int yOnField = eventY - coords[1];
 		    Log.d("X & Y", "on field (x, y) = "  +  xOnField +  " " + yOnField);
 
-		    findCoordinatesVerse(xOnField, yOnField);
+		   // findCoordinatesVerse(xOnField, yOnField);
 		    findCoordinatesVerse(eventX, eventY);
 		    
 		}
@@ -117,6 +118,7 @@ public class TanakhImageView extends ImageView	{
 	    canvas.scale(mScaleFactor, mScaleFactor);
 	    mIcon.draw(canvas);
 	    canvas.restore();
+	    localCanvas = canvas;
 	}
 	
 	// Finds verse associated with coordinates
@@ -140,7 +142,15 @@ public class TanakhImageView extends ImageView	{
 			
 			//Verse 1:
 				if (y >= ((150 * 2) *mScaleFactor) && y <= ((270 * 2)* mScaleFactor))
-					myListActivity.setSelection(0);
+					{
+						myListActivity.setSelection(0);
+						//draw a rectangle
+						Paint myPaint = new Paint();
+						myPaint.setColor(Color.rgb(0, 0, 0));
+						myPaint.setStrokeWidth(10);
+						localCanvas.drawRect(((810 * 2)*mScaleFactor), ((150 * 2) *mScaleFactor), ((1100 * 2)*mScaleFactor), ((270 * 2)* mScaleFactor), myPaint);
+					
+					}
 				else
 				if (y >= ((270* 2) * mScaleFactor) && y <= ((440 * 2)*mScaleFactor))
 				myListActivity.setSelection(1);

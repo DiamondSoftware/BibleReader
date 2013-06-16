@@ -6,7 +6,7 @@
     android:columnCount="1"
     android:orientation="vertical" >
 
-<com.example.de.vogella.android.sqlite.first.TanakhImageView
+<com.example.de.vogella.android.sqlite.first.TanakhImageViewer
     android:layout_height="332dp"
     android:layout_gravity="left|top"
     android:baselineAlignBottom="false"
