@@ -33,6 +33,7 @@ public class TanakhImageViewer extends ImageView {
     float maxScale = 3f;
     float[] m;
 
+    float trueScale;
 
     int viewWidth, viewHeight;
     static final int CLICK = 3;
@@ -61,6 +62,8 @@ public class TanakhImageViewer extends ImageView {
 	// Needs context - book & chapter
 	private void findCoordinatesVerse(int x, int y)
 	{
+	    Log.d("X & Y", "on field (x, y) = "  +  x +  " " + y);
+		
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		
 		GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
@@ -70,45 +73,38 @@ public class TanakhImageViewer extends ImageView {
 
 	    Log.d("scale factor", " = "  + mScaleFactor);
 	    Log.d("save scale", " = "  + saveScale);
-
-		
+	    Log.d("true scale", " = "  + trueScale);
 		
 		// Column #1
-		if (x  >= ((810 * 2)*mScaleFactor) && x <= ((1100*2)*mScaleFactor))
+		if (x  >= ((810 * 2)*trueScale) && x <= ((1100*2)*trueScale))
 		{
 			
 			//Verse 1:
-				if (y >= ((150 * 2) *mScaleFactor) && y <= ((270 * 2)* mScaleFactor))
-					{
-						myListActivity.setSelection(0);
-						//draw a rectangle
-						//Paint myPaint = new Paint();
-					//myPaint.setColor(Color.rgb(0, 0, 0));
-						//myPaint.setStrokeWidth(10);
-						//localCanvas.drawRect(((810 * 2)*mScaleFactor), ((150 * 2) *mScaleFactor), ((1100 * 2)*mScaleFactor), ((270 * 2)* mScaleFactor), myPaint);
-					
-					}
+				if (y >= ((150 * 2) *trueScale) && y <= ((270 * 2)* trueScale))
+				{
+					myListActivity.setSelection(0);					
+				}
 				else
-				if (y >= ((270* 2) * mScaleFactor) && y <= ((440 * 2)*mScaleFactor))
-				myListActivity.setSelection(1);
+				if (y >= ((270* 2) * trueScale) && y <= ((440 * 2)*trueScale))
+					myListActivity.setSelection(2);
 				else
-				if (y >= ((440* 2)*mScaleFactor) && y <= ((530 * 2)*mScaleFactor))
-				myListActivity.setSelection(2);
+				if (y >= ((440* 2)*trueScale) && y <= ((530 * 2)*trueScale))
+					myListActivity.setSelection(2);
 				else
-				if (y >= ((530* 2)*mScaleFactor) && y <= ((680 * 2)*mScaleFactor))
-				myListActivity.setSelection(3);
+				if (y >= ((530* 2)*trueScale) && y <= ((680 * 2)*trueScale))
+					myListActivity.setSelection(3);
 				else
-				if (y >= ((680* 2)*mScaleFactor) && y <= ((820 * 2)*mScaleFactor))
-				myListActivity.setSelection(4);
+				if (y >= ((680* 2)*trueScale) && y <= ((820 * 2)*trueScale))
+					myListActivity.setSelection(4);
 				else
-				if (y >= ((820* 2)*mScaleFactor) && y <= ((930 * 2)*mScaleFactor))
-				myListActivity.setSelection(5);
+				if (y >= ((820* 2)*trueScale) && y <= ((930 * 2)*trueScale))
+					myListActivity.setSelection(5);
 				else
-				if (y >= ((930* 2)*mScaleFactor) && y <= ((1140 * 2)*mScaleFactor))
-				myListActivity.setSelection(6);
+				if (y >= ((930* 2)*trueScale) && y <= ((1140 * 2)*trueScale))
+					myListActivity.setSelection(6);
 				else
-				if (y >= ((1140* 2)*mScaleFactor) && y <= ((1320 * 2)*mScaleFactor))
-				myListActivity.setSelection(7);
+				if (y >= ((1140* 2)*trueScale) && y <= ((1320 * 2)*trueScale))
+					myListActivity.setSelection(7);
 
 		}
 		else myListActivity.setSelection(0);			
@@ -155,7 +151,10 @@ public class TanakhImageViewer extends ImageView {
                         int xDiff = (int) Math.abs(curr.x - start.x);
                         int yDiff = (int) Math.abs(curr.y - start.y);
                         if (xDiff < CLICK && yDiff < CLICK)
-                            performClick();
+                        {
+                  		    findCoordinatesVerse((int)curr.x, (int)curr.y);               
+                        	performClick();                        
+                        }
                         break;
 
                     case MotionEvent.ACTION_POINTER_UP:
@@ -163,7 +162,6 @@ public class TanakhImageViewer extends ImageView {
                         break;
                 }
          
-      		    findCoordinatesVerse((int) event.getX(), (int) event.getY());               
                 setImageMatrix(matrix);
                 invalidate();
                 return true; // indicate event was handled
@@ -275,6 +273,10 @@ public class TanakhImageViewer extends ImageView {
             scale = Math.min(scaleX, scaleY);
             matrix.setScale(scale, scale);
 
+            Log.d("scaleX", "scaleY: " + scaleX + "  " + scaleY);
+
+            
+            
             // Center the image
             float redundantYSpace = (float) viewHeight - (scale * (float) bmHeight);
             float redundantXSpace = (float) viewWidth - (scale * (float) bmWidth);
@@ -286,6 +288,7 @@ public class TanakhImageViewer extends ImageView {
             origWidth = viewWidth - 2 * redundantXSpace;
             origHeight = viewHeight - 2 * redundantYSpace;
             setImageMatrix(matrix);
+            trueScale = scale;
         }
         fixTrans();
     }
