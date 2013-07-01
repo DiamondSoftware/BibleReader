@@ -42,8 +42,10 @@ public class TanakhImageViewer extends ImageView {
 
     protected float origWidth, origHeight;
     int oldMeasuredWidth, oldMeasuredHeight, lastTouchX, lastTouchY;
-
-
+    int vellum_orig_width;
+    int vellum_orig_height;
+    float logicalDensity = 0;
+    
     ScaleGestureDetector mScaleDetector;
 
     Context context;
@@ -56,7 +58,21 @@ public class TanakhImageViewer extends ImageView {
     public TanakhImageViewer(Context context, AttributeSet attrs) {
         super(context, attrs);
         sharedConstructing(context);
+        
+        Drawable imageLocal = getDrawable();
+        vellum_orig_width = imageLocal.getIntrinsicWidth();
+        vellum_orig_height = imageLocal.getIntrinsicHeight();
+    	logicalDensity = getResources().getDisplayMetrics().density; 
+        
     }
+    
+    
+    public int convertToDp(int input) { // Get the screen's density scale 
+    	final float logicalDensity = getResources().getDisplayMetrics().density; 
+    	// Convert the dps to pixels, based on density scale 
+    	return (int) (input * logicalDensity + 0.5f); 
+    	}
+    
     
 	// Finds verse associated with coordinates
 	// Needs context - book & chapter
@@ -64,6 +80,11 @@ public class TanakhImageViewer extends ImageView {
 	{
 	    Log.d("X & Y", "on field (x, y) = "  +  x +  " " + y);
 		
+	    Log.d("origw & origH", "...."  +  origWidth +  " " + origHeight);
+	    Log.d("v_origw & v_origH", "...."  +  vellum_orig_width +  " " + vellum_orig_height);
+	    Log.d("logicalDensity = ", "...."  +  logicalDensity +  " ");
+	    
+	    
 		LayoutInflater inflater = (LayoutInflater) context.getSystemService( Context.LAYOUT_INFLATER_SERVICE );
 		
 		GridLayout grid = (GridLayout) inflater.inflate(R.layout.activity_test_database, null);				
@@ -76,38 +97,46 @@ public class TanakhImageViewer extends ImageView {
 	    Log.d("true scale", " = "  + trueScale);
 
 	    
+	    float scaleFactor = (1/logicalDensity);
+	    Log.d("scaleFactor ", ""  +  scaleFactor +  " ");
 	    
-	    
-	    
+	    double transformed_x = x * scaleFactor; 	   
+	    double transformed_y = y * scaleFactor; 
+
+	    x= (int) Math.ceil(transformed_x); 	    
+	    y= (int) Math.ceil(transformed_y); 	    
+	   
+	    Log.d("(after scale) X & Y", "on field (x, y) = "  +  x +  " " + y);
+		    
 		// Column #1
-		if (x  >= ((810 * 2)*trueScale) && x <= ((1100*2)*trueScale))
+		if (x  >= 810 && x <= 1100)
 		{
 			
 			//Verse 1:
-				if (y >= ((150 * 2) *trueScale) && y <= ((270 * 2)* trueScale))
+				if (y >= ((150 ) ) && y <= ((270 )))
 				{
 					myListActivity.setSelection(0);					
 				}
 				else
-				if (y >= ((270* 2) * trueScale) && y <= ((440 * 2)*trueScale))
+				if (y >= ((270) ) && y <= ((440 )))
+					myListActivity.setSelection(1);
+				else
+				if (y >= ((440)) && y <= ((530 )))
 					myListActivity.setSelection(2);
 				else
-				if (y >= ((440* 2)*trueScale) && y <= ((530 * 2)*trueScale))
-					myListActivity.setSelection(2);
-				else
-				if (y >= ((530* 2)*trueScale) && y <= ((680 * 2)*trueScale))
+				if (y >= ((530)) && y <= ((680 )))
 					myListActivity.setSelection(3);
 				else
-				if (y >= ((680* 2)*trueScale) && y <= ((820 * 2)*trueScale))
+				if (y >= ((680)) && y <= ((820 )))
 					myListActivity.setSelection(4);
 				else
-				if (y >= ((820* 2)*trueScale) && y <= ((930 * 2)*trueScale))
+				if (y >= ((820)) && y <= ((930 )))
 					myListActivity.setSelection(5);
 				else
-				if (y >= ((930* 2)*trueScale) && y <= ((1140 * 2)*trueScale))
+				if (y >= ((930)) && y <= ((1140 )))
 					myListActivity.setSelection(6);
 				else
-				if (y >= ((1140* 2)*trueScale) && y <= ((1320 * 2)*trueScale))
+				if (y >= ((1140)) && y <= ((1320 )))
 					myListActivity.setSelection(7);
 
 		}
