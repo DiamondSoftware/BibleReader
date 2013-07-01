@@ -41,7 +41,7 @@ public class TanakhImageViewer extends ImageView {
 	private float mScaleFactor = 1.f;
 
     protected float origWidth, origHeight;
-    int oldMeasuredWidth, oldMeasuredHeight;
+    int oldMeasuredWidth, oldMeasuredHeight, lastTouchX, lastTouchY;
 
 
     ScaleGestureDetector mScaleDetector;
@@ -74,7 +74,11 @@ public class TanakhImageViewer extends ImageView {
 	    Log.d("scale factor", " = "  + mScaleFactor);
 	    Log.d("save scale", " = "  + saveScale);
 	    Log.d("true scale", " = "  + trueScale);
-		
+
+	    
+	    
+	    
+	    
 		// Column #1
 		if (x  >= ((810 * 2)*trueScale) && x <= ((1100*2)*trueScale))
 		{
@@ -152,7 +156,21 @@ public class TanakhImageViewer extends ImageView {
                         int yDiff = (int) Math.abs(curr.y - start.y);
                         if (xDiff < CLICK && yDiff < CLICK)
                         {
-                  		    findCoordinatesVerse((int)curr.x, (int)curr.y);               
+                  		    
+                        	
+                        	matrix.getValues(m);
+                        	float transX = m[Matrix.MTRANS_X] * -1;
+                        	float transY = m[Matrix.MTRANS_Y] * -1;
+                        	float scaleX = m[Matrix.MSCALE_X];
+                        	float scaleY = m[Matrix.MSCALE_Y];
+                        	lastTouchX = (int) ((event.getX() + transX) / scaleX);
+                        	lastTouchY = (int) ((event.getY() + transY) / scaleY);
+                        	lastTouchX = Math.abs(lastTouchX);
+                        	lastTouchY = Math.abs(lastTouchY);
+                        	
+                        	//findCoordinatesVerse((int)curr.x, (int)curr.y);               
+                        	findCoordinatesVerse(lastTouchX, lastTouchY);               
+                        	
                         	performClick();                        
                         }
                         break;
